@@ -172,7 +172,7 @@ class ContentIcon
     protected function isRowCollapsed(array $row)
     {
         $collapsed = false;
-        $cookie = $this->getCookie();
+        $cookie = ($this->getCookie() ?? '');
         if (null !== $_COOKIE) {
             $cookie = json_decode(urldecode($cookie));
             $collapsed = in_array($row['uid'], (array) $cookie);
