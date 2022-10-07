@@ -378,13 +378,20 @@ abstract class AbstractFluxController extends ActionController
                 $pluginSignature
             );
         }
+        
+        if (isset($this->responseFactory)) {
+            $response = $this->responseFactory->createResponse();
+        } else {
+            $response = $this->objectManager->get(Response::class);
+        }
+        
         return HookHandler::trigger(
             HookHandler::CONTROLLER_AFTER_RENDERING,
             [
                 'view' => $this->view,
                 'content' => $content,
                 'request' => $this->request,
-                'response' => $this->response,
+                'response' => $response,
                 'extensionName' => $extensionName,
                 'controllerClassName' => $foreignControllerClass,
                 'controllerActionName' => $actionName
@@ -448,7 +455,7 @@ abstract class AbstractFluxController extends ActionController
                 HookHandler::CONTROLLER_BEFORE_REQUEST,
                 [
                     'request' => $this->request,
-                    'response' => $this->response,
+                    'response' => $response,
                     'extensionName' => $extensionName,
                     'controllerClassName' => $controllerClassName,
                     'controllerActionName' => $controllerActionName
