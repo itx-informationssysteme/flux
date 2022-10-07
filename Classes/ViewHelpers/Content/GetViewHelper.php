@@ -128,7 +128,7 @@ class GetViewHelper extends AbstractViewHelper
         $templateVariableContainer = $renderingContext->getVariableProvider();
         $record = (array) $renderingContext->getViewHelperVariableContainer()->get(FormViewHelper::class, 'record');
 
-        if ($GLOBALS['BE_USER']->workspace) {
+        if (!empty($GLOBALS['BE_USER']) && $GLOBALS['BE_USER']->workspace) {
             $placeholder = BackendUtility::getMovePlaceholder('tt_content', $record['uid']);
             if ($placeholder) {
                 // Use the move placeholder if one exists, ensuring that "pid" and "tx_flux_parent" values are taken
@@ -202,7 +202,7 @@ class GetViewHelper extends AbstractViewHelper
                 'orderBy' => $arguments['order'] . ' ' . $arguments['sortDirection'],
                 'where' => $conditions,
                 'pidInList' => $parent['pid'],
-                'includeRecordsWithoutDefaultTranslation' => !$arguments['hideUntranslated']
+                'includeRecordsWithoutDefaultTranslation' => !($arguments['hideUntranslated'] ?? 0)
             ]
         );
 
