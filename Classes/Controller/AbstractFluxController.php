@@ -393,7 +393,7 @@ abstract class AbstractFluxController extends ActionController
                 'request' => $this->request,
                 'response' => $response,
                 'extensionName' => $extensionName,
-                'controllerClassName' => $foreignControllerClass,
+                'controllerClassName' => ($foreignControllerClass ?? null),
                 'controllerActionName' => $actionName
             ]
         )['content'];
